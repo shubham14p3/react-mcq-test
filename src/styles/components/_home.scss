@@ -1,0 +1,22 @@
+#home{
+    background-image: url('../../assets/img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    height:100vh;
+    width:100vw;
+    display: flex;
+    justify-content: space-around;
+
+    section{
+        background-color: rgba(0,0,0,0.5);
+        padding-left:$md;
+        padding-right:$md;
+        height:80%;
+        width:35%;
+    }
+  
+    .cube{
+        font-size: 8rem;
+        color: $orange;
+    }
+}
