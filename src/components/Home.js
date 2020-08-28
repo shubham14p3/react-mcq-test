@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Helmet } from "react-helmet";
-import{Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 const Home = () => (
   <Fragment>
     <Helmet>
@@ -8,26 +8,27 @@ const Home = () => (
     </Helmet>
     <div id="home">
       <section>
-        <div>
+        <div style={{ textAlign: "center" }}>
           <span className="mdi mdi-cube-outline cube"></span>
         </div>
-        <h1>QUIz App</h1>
+        <h1>QUIZ APP</h1>
         <div className="play-button-container">
           <ul>
             <li>
-              <Link to="/play/instructions">Play</Link>
+              <Link className="play-button" to="/play/instructions">
+                Play
+              </Link>
             </li>
           </ul>
         </div>
         <div className="auth-container">
-          <ul>
-            <li>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </li>
-          </ul>
+          <Link className="auth-buttons" id="login-button" to="/login">
+            Login
+          </Link>
+          <Link className="auth-buttons" id="signup-button" to="/register">
+            Register
+          </Link>
         </div>
-      
       </section>
     </div>
   </Fragment>
