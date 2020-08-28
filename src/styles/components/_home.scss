@@ -13,10 +13,81 @@
         padding-right:$md;
         height:80%;
         width:35%;
+        border-radius: 5px;
     }
   
     .cube{
         font-size: 8rem;
-        color: $orange;
+        color: $orange;        
+    }
+
+    h1{
+        text-align: center;
+        color: $off-white;
+        font-size: $lg;
+        font-weight: 400;
+    }
+
+    play-button-container{
+        width:100%;        
+    }
+
+    a.play-button{
+        background-color: $green;
+        border-radius: $button-radius;
+        color:#fff;
+        cursor: pointer;
+        padding: $normal;
+        display: block;
+        text-align: center;
+        transition: 0.3s linear all;
+    }
+
+    a.play-button:hover{
+        background-color: darken($green,10%);
+        box-shadow: $shadow;
+    }
+
+    .auth-container{
+        width: 100%;
+        display:flex;
+        justify-content: space-between;
+        margin-top: $lg;
+    }
+
+    #login-button{
+        background-color: $red;        
+    }
+
+    #login-button:hover{
+        background-color: darken($red,10%) ;
+        box-shadow: $shadow;
+    }
+
+    #signup-button{
+        background-color: $blue;        
+    }
+
+    #signup-button:hover{
+        background-color: darken($blue ,10%) ;
+        box-shadow: $shadow;
+    }
+
+    .auth-container .auth-buttons{
+        color:#fff;
+        cursor: pointer;
+        border-radius: $button-radius;
+        padding:$normal 0;
+        text-align: center;
+        width:45%;
+        transition: 0.3s linear all;
+    } 
+}
+
+@media(max-width:768px){
+    #home section{
+        padding:0 $normal;
+        width:100%;
+        height:100%;
     }
 }
