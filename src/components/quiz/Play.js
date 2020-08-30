@@ -52,9 +52,9 @@ class Play extends Component {
     return (
       <Fragment>
         <Helmet>
-          <title>Quiz page</title>
+          <title>Quiz Page</title>
         </Helmet>
-        <div className="question">
+        <div className="questions">
             <h2>Quiz Mode</h2>
           <div className="lifeline-container">
             <p>
@@ -66,24 +66,23 @@ class Play extends Component {
               <span className="lifeline"> 5</span>
             </p>
           </div>    
-          <div>
+          <div className="timer-container">
               <p>
                   <span className="left" style={{float:'left'}}>
                       1 of 15
                   </span>
-                  <span className="right">2:35
-                  <span className="mdi mdi-clock-outline mdi-24px">
-                  </span></span>
+                  <span className="right">2:35 
+                  <span className="mdi mdi-clock-outline mdi-24px"></span>   </span>             
               </p>
           </div>
            <h5>{currentQuestion.question}</h5>
-          <div className="options-containers">
-            <p className="options">{currentQuestion.optionA}</p>
-            <p className="options">{currentQuestion.optionB}</p>
+          <div className="options-container">
+            <p className="option">{currentQuestion.optionA}</p>
+            <p className="option">{currentQuestion.optionB}</p>
           </div>
-          <div className="options-containers">
-            <p className="options">{currentQuestion.optionC}</p>
-            <p className="options">{currentQuestion.optionD}</p>
+          <div className="options-container">
+            <p className="option">{currentQuestion.optionC}</p>
+            <p className="option">{currentQuestion.optionD}</p>
           </div>
           <div className="button-container">
             <button>Previous</button>
