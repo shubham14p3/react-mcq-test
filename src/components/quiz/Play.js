@@ -4,9 +4,9 @@ import M from "materialize-css";
 import questions from "../../questions.json";
 import isEmpty from "../../utils/is-empty";
 
-import currectNotification from '../../assets/audio/correct-answer.mp3';
-import wrongNotification from '../../assets/audio/wrong-answer.mp3';
-import buttonSound from '../../assets/audio/button-sound.mp3';
+import currectNotification from "../../assets/audio/correct-answer.mp3";
+import wrongNotification from "../../assets/audio/wrong-answer.mp3";
+import buttonSound from "../../assets/audio/button-sound.mp3";
 
 class Play extends Component {
   constructor(props) {
@@ -61,71 +61,89 @@ class Play extends Component {
         currentQuestion,
         nextQuestion,
         previousQuestion,
-        numberOfQuestions:questions.length,
-        answer
+        numberOfQuestions: questions.length,
+        answer,
       });
     }
   };
 
   handleOptionClick = (e) => {
-   if(e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()){
-     setTimeout(()=>{
-       document.getElementById('correct-sound').play();        
-     },500);
-    this.correctAnswer();
-   }else{
-    setTimeout(()=>{
-      document.getElementById('wrong-sound').play();        
-    },500);
-     this.wrongAnswer();
-   } 
-  }
+    if (e.target.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
+      setTimeout(() => {
+        document.getElementById("correct-sound").play();
+      }, 500);
+      this.correctAnswer();
+    } else {
+      setTimeout(() => {
+        document.getElementById("wrong-sound").play();
+      }, 500);
+      this.wrongAnswer();
+    }
+  };
 
-  handleButtonClick=()=>{
-this.playButtonSound();
-  }
-  playButtonSound=()=>{
-    document.getElementById('button-sound').play();
-
-  }
-
+  handleButtonClick = () => {
+    this.playButtonSound();
+  };
+  playButtonSound = () => {
+    document.getElementById("button-sound").play();
+  };
 
   correctAnswer = () => {
-    M.toast({ 
+    M.toast({
       html: "Correct Answer!",
       classes: "toast-valid",
-      displayLength: 1500
+      displayLength: 1500,
     });
-    this.setState(prevState => ({
-      score: prevState.score + 1,
-      correctAnswers: prevState.correctAnswers + 1,
-      currentQuestionIndex: prevState.currentQuestionIndex + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
-    }),()=>{
-      this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
-    });
-  }
+    this.setState(
+      (prevState) => ({
+        score: prevState.score + 1,
+        correctAnswers: prevState.correctAnswers + 1,
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+      }),
+      () => {
+        this.displayQuestions(
+          this.state.questions,
+          this.state.currentQuestion,
+          this.state.nextQuestion,
+          this.state.previousQuestion
+        );
+      }
+    );
+  };
   wrongAnswer = () => {
     navigator.vibrate(1000);
     M.toast({
       html: "Wrong Answer!",
       classes: "toast-invalid",
-      displayLength: 1500
+      displayLength: 1500,
     });
-    this.setState(prevState => ({
-      wrongAnswers: prevState.wrongAnswers + 1,
-      currentQuestionIndex: prevState.currentQuestionIndex + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions+ 1
-    }),()=>{
-      this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
-    });
-  }
+    this.setState(
+      (prevState) => ({
+        wrongAnswers: prevState.wrongAnswers + 1,
+        currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
+      }),
+      () => {
+        this.displayQuestions(
+          this.state.questions,
+          this.state.currentQuestion,
+          this.state.nextQuestion,
+          this.state.previousQuestion
+        );
+      }
+    );
+  };
 
   render() {
-    const { currentQuestion,currentQuestionIndex,numberOfQuestions} = this.state;
+    const {
+      currentQuestion,
+      currentQuestionIndex,
+      numberOfQuestions,
+    } = this.state;
     return (
       <Fragment>
-        <Helmet>git
+        <Helmet>
           <title>Quiz Page</title>
         </Helmet>
         <Fragment>
@@ -148,7 +166,7 @@ this.playButtonSound();
           <div className="timer-container">
             <p>
               <span className="left" style={{ float: "left" }}>
-                {currentQuestionIndex+1} of {numberOfQuestions}
+                {currentQuestionIndex + 1} of {numberOfQuestions}
               </span>
               <span className="right">
                 2:35
