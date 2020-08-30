@@ -57,8 +57,7 @@ class Play extends Component {
         currentQuestion,
         nextQuestion,
         previousQuestion,
-        numberOfQuestions: questions.length,
-        answer,
+        answer
       });
     }
   };
@@ -68,34 +67,38 @@ class Play extends Component {
      this.correctAnswer();
    }else{
      this.wrongAnswer();
-   }
+   } 
   }
   correctAnswer = () => {
-    M.toast({
+    M.toast({ 
       html: "Correct Answer!",
       classes: "toast-valid",
-      displayLength: 1500,
+      displayLength: 1500
     });
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       score: prevState.score + 1,
       correctAnswers: prevState.correctAnswers + 1,
       currentQuestionIndex: prevState.currentQuestionIndex + 1,
       numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions + 1,
-    }));
-  };
+    }),()=>{
+      this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+    });
+  }
   wrongAnswer = () => {
     navigator.vibrate(1000);
     M.toast({
       html: "Wrong Answer!",
       classes: "toast-invalid",
-      displayLength: 1500,
+      displayLength: 1500
     });
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       wrongAnswers: prevState.wrongAnswers + 1,
-      currentQuestionIndex: prevState.currentQuestion + 1,
-      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions,
-    }));
-  };
+      currentQuestionIndex: prevState.currentQuestionIndex + 1,
+      numberOfAnsweredQuestions: prevState.numberOfAnsweredQuestions+ 1
+    }),()=>{
+      this.displayQuestions(this.state.questions,this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
+    });
+  }
 
   render() {
     const { currentQuestion } = this.state;
