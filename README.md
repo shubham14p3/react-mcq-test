@@ -5,9 +5,14 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 
-In this project, we are trying to create Quiz App. This Quiz app is made to understand the React logic, ES6 feature and JS. 
+In this project, we are trying to create Quiz App. This Quiz app is made to understand the React logic, ES6 feature and JS. It contains 15 question, two helping logic called hint & fifty-fifty, summary page and an instruction page as well. 
 
 ---
+
+## Live Demo
+
+[Live Link](https://react-mcq-test.herokuapp.com/)
+
 
 ## Landing Page
 
@@ -29,10 +34,6 @@ In this project, we are trying to create Quiz App. This Quiz app is made to unde
 
 ![screenshot](./src/assets/img/screenshot04.png)
 
-## Live Demo
-
-[Live Link](https://react-mcq-test.herokuapp.com/)
-
 ---
 
 ## Built With
@@ -44,14 +45,31 @@ In this project, we are trying to create Quiz App. This Quiz app is made to unde
 
 ---
 
-### Getting Started
+### Installation
 
-To get a local copy up and running follow these simple example steps.
+1. Clone the repo
 
-- Clone the project unto your local machine
-- `cd` into the project directory
-- on the root folder please type: yarn install followed by yarn start
-- on your browser, make sure you point to the right address (i.e: http://localhost:3000/)
+```
+git clone https://github.com/shubham14p3/react-mcq-test.git
+```
+
+2. CD into the project root directory
+
+```
+cd ./react-mcq-test.git
+```
+
+3. Install Dependencies and packages
+
+```
+yarn install
+```
+
+4. Run the server
+
+```
+yarn start
+```
 
 ### Game Feature
 
