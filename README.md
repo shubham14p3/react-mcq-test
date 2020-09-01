@@ -31,7 +31,7 @@ In this project, we are trying to create Quiz App. This Quiz app is made to unde
 
 ## Live Demo
 
-[Live Link](#)
+[Live Link](https://react-mcq-test.herokuapp.com/)
 
 ---
 
