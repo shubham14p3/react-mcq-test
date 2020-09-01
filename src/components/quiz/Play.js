@@ -24,6 +24,7 @@ class Play extends Component {
       correctAnswers: 0,
       wrongAnswers: 0,
       hints: 5,
+      previousRandomNumber: [],
       fiftyFifty: 2,
       usedFiftyFifty: false,
       time: {},
@@ -62,7 +63,10 @@ class Play extends Component {
         nextQuestion,
         previousQuestion,
         numberOfQuestions: questions.length,
-        answer,
+        answer,        
+      previousRandomNumber: [],
+      },()=>{
+        this.showOptions();
       });
     }
   };
@@ -83,48 +87,64 @@ class Play extends Component {
 
   handleNextButtonClick = () => {
     this.playButtonSound();
-    if(this.state.nextQuestion!==undefined){
-      this.setState(prevState=>({
-        currentQuestionIndex: prevState.currentQuestionIndex+1
-      }),()=>{
-        this.displayQuestions(this.state.state, this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
-      });      
-    }     
+    if (this.state.nextQuestion !== undefined) {
+      this.setState(
+        (prevState) => ({
+          currentQuestionIndex: prevState.currentQuestionIndex + 1,
+        }),
+        () => {
+          this.displayQuestions(
+            this.state.state,
+            this.state.currentQuestion,
+            this.state.nextQuestion,
+            this.state.previousQuestion
+          );
+        }
+      );
+    }
   };
 
   handlePreviousButtonClick = () => {
     this.playButtonSound();
-    if(this.state.previousQuestion!==undefined){
-      this.setState(prevState=>({
-        currentQuestionIndex: prevState.currentQuestionIndex-1
-      }),()=>{
-        this.displayQuestions(this.state.state, this.state.currentQuestion,this.state.nextQuestion,this.state.previousQuestion)
-      });      
-    }     
+    if (this.state.previousQuestion !== undefined) {
+      this.setState(
+        (prevState) => ({
+          currentQuestionIndex: prevState.currentQuestionIndex - 1,
+        }),
+        () => {
+          this.displayQuestions(
+            this.state.state,
+            this.state.currentQuestion,
+            this.state.nextQuestion,
+            this.state.previousQuestion
+          );
+        }
+      );
+    }
   };
 
   handleQuitButtonClick = () => {
     this.playButtonSound();
-    if(window.confirm('Are you sure, You want to quit?')){
-      this.props.history.push('/');
+    if (window.confirm("Are you sure, You want to quit?")) {
+      this.props.history.push("/");
     }
   };
 
   handleButtonClick = (e) => {
-    switch(e.target.id){
-      case 'next-button':
+    switch (e.target.id) {
+      case "next-button":
         this.handleNextButtonClick();
         break;
-      case 'previous-button':
+      case "previous-button":
         this.handlePreviousButtonClick();
         break;
-        case 'quit-button':
-          this.handleQuitButtonClick();
-          break;
+      case "quit-button":
+        this.handleQuitButtonClick();
+        break;
       default:
-        break;      
+        break;
     }
-    };
+  };
   playButtonSound = () => {
     document.getElementById("button-sound").play();
   };
@@ -176,11 +196,57 @@ class Play extends Component {
     );
   };
 
+  showOptions=()=>{
+    const options = Array.from(document.querySelectorAll(".option"));
+
+    options.forEach(options=>{
+      options.style.visibility = 'visible';
+    })
+  }
+
+  handleHints = () => {
+    if(this.state.hints>0){
+      const options = Array.from(document.querySelectorAll(".option"));
+    let indexOfAnswer;
+
+    options.forEach((option, index) => {
+      if (option.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
+        indexOfAnswer = index;
+      }
+    });
+
+    while (true) {
+      const randomNumber = Math.round(Math.random() * 3);
+      if (
+        randomNumber !== indexOfAnswer &&
+        !this.state.previousRandomNumber.includes(randomNumber)
+      ) {
+        options.forEach((option, index) => {
+          if (index === randomNumber) {
+            option.style.visibility = "hidden";
+            this.setState((prevState) => ({
+              hints: prevState.hints - 1,
+              previousRandomNumber: prevState.previousRandomNumber.concat(
+                randomNumber
+              ),
+            }));
+          }
+        });
+        break;
+      }
+
+      if(this.state.previousRandomNumber.length>=3) 
+      {break;}
+    }
+    }
+  };
+
   render() {
     const {
       currentQuestion,
       currentQuestionIndex,
       numberOfQuestions,
+      hints,
     } = this.state;
     return (
       <Fragment>
@@ -200,8 +266,13 @@ class Play extends Component {
               <span className="lifeline">2</span>
             </p>
             <p>
-              <span className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon"></span>
-              <span className="lifeline"> 5</span>
+              <span
+                onClick={this.handleHints}
+                className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon"
+              ></span>
+              <span onClick={this.handleHints} className="lifeline">
+                {hints}
+              </span>
             </p>
           </div>
           <div className="timer-container">
@@ -233,9 +304,15 @@ class Play extends Component {
             </p>
           </div>
           <div className="button-container">
-            <button id="previous-button" onClick={this.handleButtonClick}>Previous</button>
-            <button id="next-button" onClick={this.handleButtonClick}>Next</button>
-            <button id="quit-button" onClick={this.handleButtonClick}>Quit</button>
+            <button id="previous-button" onClick={this.handleButtonClick}>
+              Previous
+            </button>
+            <button id="next-button" onClick={this.handleButtonClick}>
+              Next
+            </button>
+            <button id="quit-button" onClick={this.handleButtonClick}>
+              Quit
+            </button>
           </div>
         </div>
       </Fragment>
