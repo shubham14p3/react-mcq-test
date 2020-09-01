@@ -205,6 +205,10 @@ class Play extends Component {
     options.forEach((options) => {
       options.style.visibility = "visible";
     });
+
+    this.setState({
+      usedFiftyFifty:false
+    });
   };
 
   handleHints = () => {
