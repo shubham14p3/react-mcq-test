@@ -58,16 +58,19 @@ class Play extends Component {
       nextQuestion = questions[currentQuestionIndex + 1];
       previousQuestion = questions[currentQuestionIndex - 1];
       const answer = currentQuestion.answer;
-      this.setState({
-        currentQuestion,
-        nextQuestion,
-        previousQuestion,
-        numberOfQuestions: questions.length,
-        answer,        
-      previousRandomNumber: [],
-      },()=>{
-        this.showOptions();
-      });
+      this.setState(
+        {
+          currentQuestion,
+          nextQuestion,
+          previousQuestion,
+          numberOfQuestions: questions.length,
+          answer,
+          previousRandomNumber: [],
+        },
+        () => {
+          this.showOptions();
+        }
+      );
     }
   };
 
@@ -196,48 +199,96 @@ class Play extends Component {
     );
   };
 
-  showOptions=()=>{
+  showOptions = () => {
     const options = Array.from(document.querySelectorAll(".option"));
 
-    options.forEach(options=>{
-      options.style.visibility = 'visible';
-    })
-  }
+    options.forEach((options) => {
+      options.style.visibility = "visible";
+    });
+  };
 
   handleHints = () => {
-    if(this.state.hints>0){
+    if (this.state.hints > 0) {
       const options = Array.from(document.querySelectorAll(".option"));
-    let indexOfAnswer;
+      let indexOfAnswer;
 
-    options.forEach((option, index) => {
-      if (option.innerHTML.toLowerCase() === this.state.answer.toLowerCase()) {
-        indexOfAnswer = index;
+      while (true) {
+        const randomNumber = Math.round(Math.random() * 3);
+        if (
+          randomNumber !== indexOfAnswer &&
+          !this.state.previousRandomNumber.includes(randomNumber)
+        ) {
+          options.forEach((option, index) => {
+            if (index === randomNumber) {
+              option.style.visibility = "hidden";
+              this.setState((prevState) => ({
+                hints: prevState.hints - 1,
+                previousRandomNumber: prevState.previousRandomNumber.concat(
+                  randomNumber
+                ),
+              }));
+            }
+          });
+          break;
+        }
+
+        if (this.state.previousRandomNumber.length >= 3) {
+          break;
+        }
       }
-    });
-
-    while (true) {
-      const randomNumber = Math.round(Math.random() * 3);
-      if (
-        randomNumber !== indexOfAnswer &&
-        !this.state.previousRandomNumber.includes(randomNumber)
-      ) {
-        options.forEach((option, index) => {
-          if (index === randomNumber) {
-            option.style.visibility = "hidden";
-            this.setState((prevState) => ({
-              hints: prevState.hints - 1,
-              previousRandomNumber: prevState.previousRandomNumber.concat(
-                randomNumber
-              ),
-            }));
-          }
-        });
-        break;
-      }
-
-      if(this.state.previousRandomNumber.length>=3) 
-      {break;}
     }
+  };
+
+  handleFiftyFifty = () => {
+    if (this.state.fiftyFifty > 0 && this.state.usedFiftyFifty === false) {
+      const options = document.querySelectorAll(".option");
+      const randomNumbers = [];
+      let indexOfAnswer;
+
+      options.forEach((option, index) => {
+        if (
+          option.innerHTML.toLowerCase() === this.state.answer.toLowerCase()
+        ) {
+          indexOfAnswer = index;
+        }
+      });
+
+      let count = 0;
+      do {
+        const randomNumber = Math.round(Math.random() * 3);
+        if (randomNumber !== indexOfAnswer) {
+          if (
+            randomNumbers.length < 2 &&
+            !randomNumbers.includes(randomNumber) &&
+            !randomNumbers.includes(indexOfAnswer)
+          ) {
+            randomNumbers.push(randomNumber);
+            count++;
+          } else {
+            while (true) {
+              const newRandomNumber = Math.round(Math.random() * 3);
+              if (
+                !randomNumbers.includes(newRandomNumber) &&
+                newRandomNumber !== indexOfAnswer
+              ) {
+                randomNumbers.push(newRandomNumber);
+                count++;
+                break;
+              }
+            }
+          }
+        }
+      } while (count < 2);
+
+      options.forEach((option, index) => {
+        if (randomNumbers.includes(index)) {
+          option.style.visibility = "hidden";
+        }
+      });
+      this.setState((prevState) => ({
+        fiftyFifty: prevState.fiftyFifty - 1,
+        usedFiftyFifty: true,
+      }));
     }
   };
 
@@ -247,6 +298,7 @@ class Play extends Component {
       currentQuestionIndex,
       numberOfQuestions,
       hints,
+      fiftyFifty,
     } = this.state;
     return (
       <Fragment>
@@ -262,16 +314,19 @@ class Play extends Component {
           <h2>Quiz Mode</h2>
           <div className="lifeline-container">
             <p>
-              <span className="mdi mdi-set-center mdi-24px lifeline-icon"></span>
-              <span className="lifeline">2</span>
+              <span
+                onClick={this.handleFiftyFifty}
+                className="mdi mdi-set-center mdi-24px lifeline-icon"
+              >
+                <span className="lifeline">{fiftyFifty}</span>
+              </span>
             </p>
             <p>
               <span
                 onClick={this.handleHints}
                 className="mdi mdi-lightbulb-on-outline mdi-24px lifeline-icon"
-              ></span>
-              <span onClick={this.handleHints} className="lifeline">
-                {hints}
+              >
+                <span className="lifeline">{hints}</span>
               </span>
             </p>
           </div>
