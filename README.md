@@ -112,6 +112,7 @@ Give a ⭐️ if you like this project!
 
 - Registration or Signup
 - Mail Integration
+- Redesiging th ui
 
 ---
 
