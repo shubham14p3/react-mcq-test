@@ -7,6 +7,8 @@
 
 In this project, we are trying to create Quiz App. This Quiz app is made to understand the React logic, ES6 feature and JS. It contains 15 question, two helping logic called hint & fifty-fifty, summary page and an instruction page as well. 
 
+In future update the page will be taken reference on KBC an Indian Popular Game made with MCQ.
+
 ---
 
 ## Live Demo
